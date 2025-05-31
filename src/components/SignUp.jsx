@@ -22,16 +22,21 @@ const SignUp = () => {
         createdAt: new Date()
       });
       alert("註冊成功！");
-      navigate("/profile"); // 註冊後導向個人頁面
+      navigate("/profile");
     } catch (error) {
       alert(error.message);
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-white">
-      <form onSubmit={handleSignUp} className="flex flex-col w-80 gap-4 p-8 shadow-md rounded bg-white">
-        <h2 className="text-2xl font-semibold text-center">註冊帳號</h2>
+    <div className="min-h-screen flex items-center justify-center bg-white">
+      <form
+        onSubmit={handleSignUp}
+        className="flex flex-col w-80 gap-4 p-8 shadow-lg rounded bg-white"
+      >
+        <h2 className="text-2xl font-semibold text-center">
+          註冊帳號
+        </h2>
 
         <input
           className="border rounded px-3 py-2"
@@ -81,4 +86,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
