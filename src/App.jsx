@@ -4,6 +4,8 @@ import { AuthProvider } from "./contexts/AuthContext";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import UserProfile from "./components/UserProfile";
+import CalendarPage from "./pages/CalendarPage";
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/calendar" element={<CalendarPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
