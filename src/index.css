@@ -16,6 +16,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ✅ 讓背景變色 */
+.fc .fc-col-header-cell {
+  background-color: #228991 !important;
+}
+
+/* ✅ 讓星期文字變白 */
+.fc .fc-col-header-cell .fc-col-header-cell-cushion {
+  color: white !important;
+}
+.fc .fc-daygrid-day-number {
+  color: #228991 !important;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
