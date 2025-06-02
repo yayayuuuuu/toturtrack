@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -7,6 +7,11 @@ import { useAuth } from "../contexts/AuthContext";
 import CalendarModal from "./CalendarModal";
 import { useCalendarEvents } from "../hooks/useCalendarEvents";
 import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(duration);
+dayjs.extend(relativeTime);
 
 const CalendarSection = () => {
   const { currentUser } = useAuth();
@@ -27,6 +32,8 @@ const CalendarSection = () => {
   const [subject, setSubject] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+
+  const [countdownText, setCountdownText] = useState("");
 
   const resetModal = () => {
     setStudentName("");
@@ -99,6 +106,35 @@ const CalendarSection = () => {
     return sorted[0] || null;
   }, [events]);
 
+  // 🔁 倒數時間更新邏輯
+  useEffect(() => {
+    if (!upcomingEvent) {
+      setCountdownText("");
+      return;
+    }
+
+    const updateCountdown = () => {
+      const now = dayjs();
+      const start = dayjs(upcomingEvent.start);
+      const diff = dayjs.duration(start.diff(now));
+
+      const days = diff.days();
+      const hours = diff.hours();
+      const minutes = diff.minutes();
+
+      const text = `${days > 0 ? `${days} 天 ` : ""}${
+        hours > 0 ? `${hours} 小時 ` : ""
+      }${minutes} 分鐘`;
+
+      setCountdownText(text);
+    };
+
+    updateCountdown(); // 初始更新
+    const interval = setInterval(updateCountdown, 60000); // 每分鐘更新
+
+    return () => clearInterval(interval); // 清除 interval
+  }, [upcomingEvent]);
+
   return (
     <div className="mt-10">
       {upcomingEvent && (
@@ -112,6 +148,7 @@ const CalendarSection = () => {
             </span>{" "}
             開始。
           </p>
+          <p className="mt-1 text-sm text-gray-600">⏳ 距離開始：{countdownText}</p>
         </div>
       )}
 
@@ -151,4 +188,5 @@ const CalendarSection = () => {
 };
 
 export default CalendarSection;
+
 
