@@ -1,5 +1,4 @@
-// src/components/CalendarSection.jsx
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -7,6 +6,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { useAuth } from "../contexts/AuthContext";
 import CalendarModal from "./CalendarModal";
 import { useCalendarEvents } from "../hooks/useCalendarEvents";
+import dayjs from "dayjs";
 
 const CalendarSection = () => {
   const { currentUser } = useAuth();
@@ -84,8 +84,37 @@ const CalendarSection = () => {
     }
   };
 
+  const upcomingEvent = useMemo(() => {
+    if (!events || events.length === 0) return null;
+
+    const now = new Date();
+    const sorted = [...events]
+      .map((e) => ({
+        ...e,
+        start: new Date(e.start),
+      }))
+      .filter((e) => e.start > now)
+      .sort((a, b) => a.start - b.start);
+
+    return sorted[0] || null;
+  }, [events]);
+
   return (
     <div className="mt-10">
+      {upcomingEvent && (
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6 rounded shadow">
+          <p className="font-semibold">提醒事項：</p>
+          <p>
+            <span className="font-bold">{upcomingEvent.extendedProps.studentName}</span> 的{" "}
+            <span className="italic">{upcomingEvent.extendedProps.subject}</span> 課程將於{" "}
+            <span className="font-bold">
+              {dayjs(upcomingEvent.start).format("YYYY/MM/DD HH:mm")}
+            </span>{" "}
+            開始。
+          </p>
+        </div>
+      )}
+
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -122,3 +151,4 @@ const CalendarSection = () => {
 };
 
 export default CalendarSection;
+

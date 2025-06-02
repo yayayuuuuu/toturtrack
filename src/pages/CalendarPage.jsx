@@ -7,7 +7,7 @@ const CalendarPage = () => {
   return (
     <div>
       <Header />
-      <main className="p-8">
+      <main className="p-8 pt-24">
         <h1 className="text-3xl font-bold mb-6">行事曆</h1>
         <CalendarSection />
       </main>

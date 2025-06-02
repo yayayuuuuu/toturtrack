@@ -15,6 +15,7 @@
     "@fullcalendar/interaction": "^6.1.17",
     "@fullcalendar/react": "^6.1.17",
     "@fullcalendar/timegrid": "^6.1.17",
+    "dayjs": "^1.11.13",
     "firebase": "^11.8.1",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",
