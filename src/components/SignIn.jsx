@@ -10,11 +10,28 @@ const SignIn = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (currentUser) {
-        navigate("/calendar"); // 已登入就跳轉
-    }
-  }, [currentUser, navigate]);
+    // 模擬 Firebase auth 狀態載入
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigate("/home");
+      } else {
+        setLoading(false);
+      }
+    });
+  
+    return () => unsubscribe();
+  }, [navigate]);
+  
+  if (loading) return <div>Loading...</div>;
+
+
+
+
+
+  
 
   const handleSignIn = async (e) => {
     e.preventDefault();

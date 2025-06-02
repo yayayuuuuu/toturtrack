@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext'; // ✅ 引入 useAuth
+import { useAuth } from '../contexts/AuthContext';
 
 export default function HamburgerMenu() {
   const [open, setOpen] = useState(false);
-  const { currentUser } = useAuth(); // ✅ 取得登入狀態
+  const { currentUser } = useAuth();
+
+  // 如果沒有登入，不顯示漢堡選單
+  if (!currentUser) return null;
 
   return (
     <>
-      {/* 自訂漢堡按鈕 */}
+      {/* 漢堡按鈕 */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed top-4 left-4 z-50 p-2 bg-transparent border-none focus:outline-none"
+        className="fixed top-30 left-4 z-50 p-2 bg-transparent border-none focus:outline-none"
       >
         {!open ? (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -29,16 +32,16 @@ export default function HamburgerMenu() {
 
       {/* 側邊選單 */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-[#2B5659] text-white z-40 transition-transform duration-300 ${
+        className={`fixed top-24 left-0 h-[calc(100%-6rem)] w-64 bg-[#2B5659] text-white z-40 transition-transform duration-300 ${
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <ul className="flex flex-col p-6 space-y-6 pt-24">
+        <ul className="flex flex-col p-6 space-y-6 pt-30">
           <li>
             <Link
               to="/calendar"
               onClick={() => setOpen(false)}
-              className="text-white visited:text-white active:text-white no-underline hover:text-yellow-300"
+              className="text-white hover:text-yellow-300 no-underline"
             >
               行事曆
             </Link>
@@ -47,25 +50,26 @@ export default function HamburgerMenu() {
             <Link
               to="/students"
               onClick={() => setOpen(false)}
-              className="text-white visited:text-white active:text-white no-underline hover:text-yellow-300"
+              className="text-white hover:text-yellow-300 no-underline"
             >
               學生列表
             </Link>
           </li>
-
-        
         </ul>
       </div>
 
-      {/* 背景模糊遮罩 */}
+      {/* 背景遮罩 */}
       {open && (
         <div
-          className="fixed inset-0 backdrop-blur-md bg-black/10 z-30"
+          className="fixed inset-0 top-24 backdrop-blur-md bg-black/10 z-30"
           onClick={() => setOpen(false)}
         />
       )}
     </>
   );
 }
+
+
+
 
 

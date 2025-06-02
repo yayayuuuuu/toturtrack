@@ -22,7 +22,7 @@ const SignUp = () => {
         createdAt: new Date()
       });
       alert("註冊成功！");
-      navigate("/profile");
+      navigate("/home");
     } catch (error) {
       alert(error.message);
     }
