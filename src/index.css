@@ -5,16 +5,13 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 /* ✅ 讓背景變色 */
 .fc .fc-col-header-cell {
@@ -27,6 +24,26 @@
 }
 .fc .fc-daygrid-day-number {
   color: #228991 !important;
+}
+
+.my-custom-btn {
+  background-color: #228991;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: 1px solid #228991;
+  transition: opacity 0.2s;
+  margin-top: 1rem;
+}
+
+.my-custom-btn:hover {
+  opacity: 0.9;
+}
+
+.disabled-btn {
+  background-color: #ccc;
+  color: white;
+  cursor: not-allowed;
 }
 
 a {

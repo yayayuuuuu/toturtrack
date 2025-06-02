@@ -1,9 +1,11 @@
 // components/StudentCard.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function StudentCard({ student }) {
   const navigate = useNavigate();
+  const [hover, setHover] = useState(false);
+
   return (
     <div className="flex bg-white shadow p-4 rounded-md items-center justify-between">
       <div className="flex items-center space-x-4">
@@ -20,7 +22,14 @@ export default function StudentCard({ student }) {
         </div>
       </div>
       <button
-        className="bg-teal-600 text-white px-3 py-1 rounded"
+        style={{
+          backgroundColor: hover ? 'white' : '#228991',
+          color: hover ? '#228991' : 'white',
+          border: '1px solid #228991',
+        }}
+        className="px-3 py-1 rounded transition-colors duration-200"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
         onClick={() => navigate(`/edit-student/${student.id}`)}
       >
         詳細檔案

@@ -7,6 +7,7 @@ import StudentCard from '../components/StudentCard';
 
 export default function StudentListPage() {
   const [students, setStudents] = useState([]);
+  const [hover, setHover] = useState(false);
   const navigate = useNavigate();
   const userId = auth.currentUser.uid;
 
@@ -23,8 +24,15 @@ export default function StudentListPage() {
   return (
     <div className="p-4">
       <button
-        className="bg-teal-600 text-white px-4 py-2 rounded"
-        onClick={() => navigate('/add-student')}
+        style={{
+          backgroundColor: hover ? 'white' : '#228991',
+          color: hover ? '#228991' : 'white',
+          border: '1px solid #228991',
+        }}
+        className="px-4 py-2 rounded transition-colors duration-200"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        onClick={() => navigate('/students/new')}
       >
         ＋ 新增學生
       </button>
@@ -37,3 +45,4 @@ export default function StudentListPage() {
     </div>
   );
 }
+

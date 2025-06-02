@@ -12,7 +12,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (currentUser) {
-      navigate("/calendar"); // 已登入就跳轉
+        navigate("/calendar"); // 已登入就跳轉
     }
   }, [currentUser, navigate]);
 
